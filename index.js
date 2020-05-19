@@ -35,12 +35,7 @@ let inputs = document.querySelectorAll("input");
 let inputsResultados = document.querySelectorAll("#resultados input");
 let selects = document.querySelectorAll("select");
 
-let erroFck = document.querySelector("#erro-fck");
-let erroFcj = document.querySelector('#erro-fcj');
-let erroAC = document.querySelector('#erro-ac');
-let erroCimento = document.querySelector('#erro-cimento');
 let erros;
-let c = 0;
 
 let titulosDesvioPadrao = [
     "Quando todos os materiais forem medidos em peso e houver medidor e água, corrigindo-se as quantidades de agregado miúdo e água em função de determinações frequentes e precisas do teor de umidade dos agregados, e houver garantia de manutenção, no decorrer da obra, da homogeneidade dos materiais a serem empregados",
@@ -87,6 +82,7 @@ let tabelaConsumoBrita = [
 
 for (var i=0, l=inputs.length; i<l; i++) {
     inputs[i].addEventListener('input', calcularTudo, false);
+    inputs[i].setAttribute("onkeypress", "return isNumberKey(event)"); 
 }
 
 for (var i=0, l=selects.length; i<l; i++) {
@@ -99,6 +95,15 @@ for (var i=0, l=desvioPadrao.length; i<l; i++){
 }
 
 defineTituloDesvioPadrao();
+
+function eTeclaNumerica(evt){
+    let keyCode = (evt.which) ? evt.which : evt.keyCode;
+    if (keyCode != 46 && keyCode != 188 && keyCode > 31 
+    && (keyCode < 48 || keyCode > 57))
+        return false;
+
+    return true;
+}
 
 function calcularTudo(){
     erros = []
@@ -208,7 +213,7 @@ function calcularConsumoCimento(){
 
             ocultaErro(consumoCimento);
         } else {
-            erros.push(consumoCimento, `O consumo de cimento mínimo para esta classe de agressividade é: ${tCC}.`)
+            erros.push([consumoCimento, `O consumo de cimento mínimo para esta classe de agressividade é: ${tCC}.`])
         }
     } else {
         ocultaErro(consumoCimento);
@@ -222,13 +227,26 @@ function calcularConsumoBrita(){
 }
 
 function calcularVolumeAreia(){
-    if (consumoCimento.value && cimentoEspecifica.value && consumoBrita.value && britaEspecifica.value && consumoAgua.value)
+    if (consumoCimento.value && cimentoEspecifica.value && consumoBrita.value && britaEspecifica.value && consumoAgua.value){
         volumeAreia.value = (1000 - ((consumoCimento.value/cimentoEspecifica.value) + (consumoBrita.value/britaEspecifica.value) + (consumoAgua.value/1))).toFixed(5);
+
+        if (volumeAreia.value < 0){
+            erros.push([volumeAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${volumeAreia.value}.`])
+        } else {
+            ocultaErro(volumeAreia);
+        }
+    }
 }
 
 function calcularConsumoAreia(){
     if (volumeAreia.value && areiaEspecifica.value){
         consumoAreia.value = (volumeAreia.value * areiaEspecifica.value).toFixed(5);
+
+        if (consumoAreia.value < 0){
+            erros.push([consumoAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${consumoAreia.value}.`])
+        } else {
+            ocultaErro(consumoAreia);
+        }
     }
 }
 
@@ -241,6 +259,12 @@ function calcularTraco(){
         tracoBrita.value = (consumoBrita.value / consumoCimento.value).toFixed(2);
 
         tracoAC.value = (consumoAgua.value / consumoCimento.value).toFixed(2);
+
+        if (tracoAreia.value < 0){
+            erros.push([tracoAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${tracoAreia.value}.`])
+        } else {
+            ocultaErro(tracoAreia);
+        }
     }
 }
 
