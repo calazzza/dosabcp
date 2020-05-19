@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Programa Dosagem</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div>
+            <strong>Agressividade do ambiente</strong>
+            <select name="agressividade" id="agressividade">
+                <option value="3">Industrial (Forte)</option>
+                <option value="2">Industrial A (Moderada)</option>
+                <option value="2">Industrial B (Moderada)</option>
+                <option value="4">Industrial C (Muito forte)</option>
+                <option value="4">Respingos de maré (Muito forte)</option>
+                <option value="1">Rural (Fraca)</option>
+                <option value="1">Submerso (Fraca)</option>
+                <option value="2">Urbana (Moderada)</option>
+                <option value="1">Urbana A (Fraca)</option>
+                <option value="1">Urbana B (Fraca)</option>
+            </select>
+        </div>
+        
+        <div>
+            <strong>Tipo de estrutura</strong>
+            <select name="estrutura" id="estrutura">
+                <option value="armado">Concreto armado</option>
+                <option value="protendido">Concreto protendido</option>
+            </select>
+        </div>
+        
+        <div>
+            <strong>Fck</strong>
+            <input type="number" name="fck" id="fck" maxlength="50">
+            <span class="mensagem-erro" id="erro-fck"></span>
+        </div>
+        
+        <div>
+            <strong>Diâmetro da brita</strong>
+            <select name="diametro-brita" id="diametro-brita">
+                <option value="9.5">9,5mm</option>
+                <option value="12.5">12,5mm</option>
+                <option value="19">19mm</option>
+                <option value="25">25mm</option>
+                <option value="31.5">31,5mm</option>
+                <option value="37.5">37,5mm</option>
+            </select>
+        </div>
+        
+        <div>
+            <strong>Slump/batimento</strong>
+            <select name="slump" id="slump">
+                <option value="A">61 a 80mm</option>
+                <option value="B">81 a 100mm</option>
+                <option value="C">101 a 120mm</option>
+                <option value="D">121 a 140mm</option>
+                <option value="E">141 a 160mm</option>
+                <option value="F">161 a 180mm</option>
+                <option value="J">181 a 200mm</option>
+            </select>
+        </div>
+
+        <div>
+            <strong>Desvio Padrão</strong>
+            <select name="desvio-padrao" id="desvio-padrao">
+                <option value="4">4</option>
+                <option value="5.5">5,5</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+                
+        <div>
+            <strong>Cimento - Massa Específica (Kg/dm³)</strong>
+            <input type="number" name="cimento-espec" id="cimento-espec" >
+        </div>
+        
+        <div>
+            <strong>Areia - Massa Específica (Kg/dm³)</strong>
+            <input type="number" name="areia-espec" id="areia-espec" >
+        </div>
+        
+        <div>
+            <strong>Brita - Massa Específica (Kg/dm³)</strong>
+            <input type="number" name="brita-espec" id="brita-espec" >
+        </div>
+        
+        <div>
+            <strong>Cimento - Massa Unitária (Kg/dm³)</strong>
+            <input type="number" name="cimento-unitaria" id="cimento-unitaria" >
+        </div>
+        
+        <div>
+            <strong>Areia - Massa Unitária (Kg/dm³)</strong>
+            <input type="number" name="areia-unitaria" id="areia-unitaria" >
+        </div>
+        
+        <div>
+            <strong>Brita - Massa Unitária (Kg/dm³)</strong>
+            <input type="number" name="brita-unitaria" id="brita-unitaria" >
+        </div>
+        
+        <div>
+            <strong>Módulo de finura da areia</strong>
+            <select name="finura-areia" id="finura-areia">
+                <option value="1.0">1,0</option>
+                <option value="1.2">1,2</option>
+                <option value="1.4">1,4</option>
+                <option value="1.6">1,6</option>
+                <option value="1.8">1,8</option>
+                <option value="2.0">2,0</option>
+                <option value="2.2">2,2</option>
+                <option value="2.4">2,4</option>
+                <option value="2.6">2,6</option>
+                <option value="2.8">2,8</option>
+            </select>
+        </div>
+        
+        <div>
+            <strong>Capacidade da betoneira</strong>
+            <input type="number" name="betoneira" id="betoneira" >
+        </div>
+    </div>
+    
+    <div class="container" id="resultados">
+        <div>
+            <strong>Fcj</strong>
+            <input type="number" name="fcj" id="fcj" readonly>
+            <span class="mensagem-erro" id="erro-fcj"></span>
+        </div>
+        
+        <div>
+            <strong>Relação água cimento</strong>
+            <input type="number" name="agua-cimento" id="agua-cimento" readonly>
+            <span class="mensagem-erro" id="erro-ac"></span>
+        </div>
+        
+        <div>
+            <strong>Consumo de água (l/m³)</strong>
+            <input type="number" name="consumo-agua" id="consumo-agua" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de cimento (kg/m³)</strong>
+            <input type="number" name="consumo-cimento" id="consumo-cimento" readonly>
+            <span class="mensagem-erro" id="erro-cimento"></span>
+        </div>
+        
+        <div>
+            <strong>Consumo de brita (kg/m³)</strong>
+            <input type="number" name="consumo-brita" id="consumo-brita" readonly>
+        </div>
+        
+        <div>
+            <strong>Volume absoluto da Areia</strong>
+            <input type="number" name="volume-areia" id="volume-areia" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de areia (kg)</strong>
+            <input type="number" name="consumo-areia" id="consumo-areia" readonly>
+        </div>
+
+        <div>
+            <strong>Traço - Cimento</strong>
+            <input type="number" name="traco-cimento" id="traco-cimento" readonly>
+        </div>
+
+        <div>
+            <strong>Traço - Areia</strong>
+            <input type="number" name="traco-areia" id="traco-areia" readonly>
+        </div>
+
+        <div>
+            <strong>Traço - Brita</strong>
+            <input type="number" name="traco-brita" id="traco-brita" readonly>
+        </div>
+        
+        <div>
+            <strong>Traço - Água/Cimento</strong>
+            <input type="number" name="traco-ac" id="traco-ac" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de cimento (kg)</strong>
+            <input type="number" name="consumo-betoneira-cimento" id="consumo-betoneira-cimento" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de areia (kg)</strong>
+            <input type="number" name="consumo-betoneira-areia" id="consumo-betoneira-areia" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de brita (kg)</strong>
+            <input type="number" name="consumo-betoneira-brita" id="consumo-betoneira-brita" readonly>
+        </div>
+        
+        <div>
+            <strong>Consumo de água (l)</strong>
+            <input type="number" name="consumo-betoneira-agua" id="consumo-betoneira-agua" readonly>
+        </div>
+    </div>
+    
+    <script src="index.js" async defer></script>
+</body>
+</html>
