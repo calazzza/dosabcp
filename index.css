@@ -67,19 +67,24 @@ input[type=number] {
     transform: scale(1.02);
 }
 
-
 .container div strong{
     display: block;
     margin-bottom: 16px;
     color: #41414d;
 }
 
-#resultados input{
+input:read-only{
     background: #ebebeb;
 }
 
 .mensagem-erro{
     font-size: 10px;
     color: #e02041;
+    display: none;
+}
+
+.mensagem-alerta{
+    font-size: 10px;
+    color: #b9ae08;
     display: none;
 }

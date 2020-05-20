@@ -1,19 +1,18 @@
 let agressividade = document.querySelector('#agressividade');
 let desvioPadrao = document.querySelector('#desvio-padrao');
 let fck = document.querySelector('#fck');
+let curva = document.querySelector('#curva');
 let estrutura = document.querySelector('#estrutura');
 let finuraAreia = document.querySelector('#finura-areia');
 let cimentoEspecifica = document.querySelector("#cimento-espec");
 let areiaEspecifica = document.querySelector("#areia-espec");
 let britaEspecifica = document.querySelector("#brita-espec");
-let cimentoUnitaria = document.querySelector("#cimento-unitaria");
-let areiaUnitaria = document.querySelector("#areia-unitaria");
 let britaUnitaria = document.querySelector("#brita-unitaria");
 let areiaUmidade = document.querySelector("#areia-umidade");
 let britaUmidade = document.querySelector("#brita-umidade");
 let diametroBrita = document.querySelector('#diametro-brita');
 let slump = document.querySelector('#slump');
-let betoneira = document.querySelector('#betoneira');
+let capacidadeBetoneira = document.querySelector('#capacidade-betoneira');
 
 let fcj = document.querySelector("#fcj");
 let aguaCimento = document.querySelector('#agua-cimento');
@@ -25,7 +24,7 @@ let consumoAreia = document.querySelector("#consumo-areia");
 let tracoCimento = document.querySelector("#traco-cimento");
 let tracoAreia = document.querySelector("#traco-areia");
 let tracoBrita = document.querySelector("#traco-brita");
-let tracoAC = document.querySelector("#traco-ac");
+let tracaoAgua = document.querySelector("#traco-agua");
 let consumoBetoneiraCimento = document.querySelector("#consumo-betoneira-cimento");
 let consumoBetoneiraAreia = document.querySelector("#consumo-betoneira-areia");
 let consumoBetoneiraBrita = document.querySelector("#consumo-betoneira-brita");
@@ -82,7 +81,7 @@ let tabelaConsumoBrita = [
 
 for (var i=0, l=inputs.length; i<l; i++) {
     inputs[i].addEventListener('input', calcularTudo, false);
-    inputs[i].setAttribute("onkeypress", "return isNumberKey(event)"); 
+    inputs[i].setAttribute("onkeypress", "return eTeclaNumerica(event)"); 
 }
 
 for (var i=0, l=selects.length; i<l; i++) {
@@ -94,12 +93,11 @@ for (var i=0, l=desvioPadrao.length; i<l; i++){
     item.title = titulosDesvioPadrao[i]
 }
 
-defineTituloDesvioPadrao();
+definirTituloDesvioPadrao();
 
 function eTeclaNumerica(evt){
     let keyCode = (evt.which) ? evt.which : evt.keyCode;
-    if (keyCode != 46 && keyCode != 188 && keyCode > 31 
-    && (keyCode < 48 || keyCode > 57))
+    if (keyCode != 46 && keyCode != 44 && keyCode > 31 && (keyCode < 48 || keyCode > 57))
         return false;
 
     return true;
@@ -108,7 +106,7 @@ function eTeclaNumerica(evt){
 function calcularTudo(){
     erros = []
 
-    verificaFck();
+    verificarFck();
     calcularFcj();
     calcularAguaCimento();
     calcularConsumoAgua();
@@ -117,16 +115,16 @@ function calcularTudo(){
     calcularVolumeAreia();
     calcularConsumoAreia();
     calcularTraco();
-    calcularCapacidadeBetoneira();
-    verificaErros();
-    defineTituloDesvioPadrao();
+    calcularConsumoBetoneira();
+    verificarErros();
+    definirTituloDesvioPadrao();
 }
 
-function verificaFck(){  
+function verificarFck(){  
     if (parseFloat(fck.value) < tabelaFck.vlookup(estrutura.value, agressividade.value)){
         erros.push([fck, `O Fck mínimo para esta classe de agressividade é: ${tabelaFck.vlookup(estrutura.value, agressividade.value)}.`]);
     } else{
-        ocultaErro(fck);
+        ocultarErro(fck);
     }
 }
 
@@ -140,62 +138,101 @@ function calcularAguaCimento(){
         let a, b;
         let e = 2.7182818284590452353602874;
 
-        ocultaErro(fcj);
+        switch (curva.value){
+            case "A":
+                a = 5.7427;
+                b = -52.65;
+                break;
+            case "B":
+                a = 5.3893;
+                b = -49.64;
+                break;
+            case "C":
+                a = 5.0623;
+                b = -46.41;
+                break;
+            case "D":
+                a = 4.7142;
+                b = -43.28;
+                break;
+            case "E":
+                a = 4.3422;
+                b = -40.13;
+                break;
+            case "F":
+                a = 4.0432;
+                b = -36.83;
+                break;
+            case "G":
+                a = 3.634;
+                b = -33.83;
+                break;
+            case "H":
+                a = 3.2929;
+                b = -30.63;
+                break;
+        }
 
-        if (fcj.value > 47 && fcj.value <= 50){
-            a = 5.7427;
-            b = -52.65;
-        }
-        else if (fcj.value > 44 && fcj.value <= 47){
-            a = 5.3893;
-            b = -49.64;
-        }
-        else if (fcj.value > 41 && fcj.value <= 44){
-            a = 5.0623;
-            b = -46.41;
-        }
-        else if (fcj.value > 35 && fcj.value <= 41){
-            a = 4.7142;
-            b = -43.28;
-        }
-        else if (fcj.value > 32 && fcj.value <= 35){
-            a = 4.0432;
-            b = -36.83;
-        }
-        else if (fcj.value > 29 && fcj.value <= 32){
-            a = 3.634;
-            b = -33.83;
-        }
-        else if (fcj.value <= 29){
-            a = 3.2929;
-            b = -30.63;
-        }
-        else {
-            a = undefined;            
-            erros.push([fcj, `Rever valores de Fcj. O valor máximo é 50. O valor atual é: ${fcj.value}.`]);
+        switch (true){
+            case (fcj.value > 47 && fcj.value <= 50):
+                curva.value != "A"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -52,65ln(x) + 5,7427")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 44 && fcj.value <= 47):
+                curva.value != "B"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -49,64ln(x) + 5,3893")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 41 && fcj.value <= 44):
+                curva.value != "C"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -46,41ln(x) + 5,0623")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 38 && fcj.value <= 41):
+                curva.value != "D"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -43,28ln(x) + 4,7142")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 35 && fcj.value <= 38):
+                curva.value != "E"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -40,13ln(x) + 4,3422")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 32 && fcj.value <= 35):
+                curva.value != "F"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -36,83ln(x) + 4,0432")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value > 29 && fcj.value <= 32):
+                curva.value != "G"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -33,83ln(x) + 3,634")
+                    : ocultarAlerta(curva)
+                break;
+            case (fcj.value <= 29):
+                curva.value != "H"
+                    ? exibirAlerta(curva, "A equação recomendada é: y = -30,63ln(x) + 3,2929")
+                    : ocultarAlerta(curva)
+                break;
+            default:
+                erros.push([fcj, `Rever valores de Fcj. O valor máximo é 50. O valor atual é: ${fcj.value}.`]);
         }
 
-        if (a != undefined){
-            let lnx = (parseFloat(fcj.value) - a) / b;
-            let aC = Math.pow(e,lnx).toFixed(5); 
-            let tAC = tabelaAguaCimento.vlookup(estrutura.value, agressividade.value)
+        let lnx = (parseFloat(fcj.value) - a) / b;
+        let aC = Math.pow(e,lnx).toFixed(5); 
+        let tAC = tabelaAguaCimento.vlookup(estrutura.value, agressividade.value)
 
-            if (aC <= tAC){
-                aguaCimento.value = aC 
+        if (aC <= tAC){
+            aguaCimento.value = aC 
 
-                ocultaErro(aguaCimento);
-            } else {
-                erros.push([aguaCimento,`A relação água cimento máxima para esta classe de agressividade é: ${tAC}. O valor atual é: ${aC}`]);
-            }
+            ocultarErro(aguaCimento);
         } else {
-            aguaCimento.style.borderColor = "#dcdce6";
-            aguaCimento.style.color = "#333";
-
-            erroAC.style.display = "none";
-        }
+            erros.push([aguaCimento,`A relação água cimento máxima para esta classe de agressividade é: ${tAC}. O valor atual é: ${aC}`]);
+        }        
     } else {
-        ocultaErro(fcj);
-        ocultaErro(aguaCimento);
+        ocultarErro(fcj);
+        ocultarErro(aguaCimento);
+        ocultarAlerta(curva)
     }
 }
 
@@ -211,12 +248,12 @@ function calcularConsumoCimento(){
         if (cC >= tCC){
             consumoCimento.value = cC 
 
-            ocultaErro(consumoCimento);
+            ocultarErro(consumoCimento);
         } else {
             erros.push([consumoCimento, `O consumo de cimento mínimo para esta classe de agressividade é: ${tCC}.`])
         }
     } else {
-        ocultaErro(consumoCimento);
+        ocultarErro(consumoCimento);
     }
 }
 
@@ -233,7 +270,7 @@ function calcularVolumeAreia(){
         if (volumeAreia.value < 0){
             erros.push([volumeAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${volumeAreia.value}.`])
         } else {
-            ocultaErro(volumeAreia);
+            ocultarErro(volumeAreia);
         }
     }
 }
@@ -245,7 +282,7 @@ function calcularConsumoAreia(){
         if (consumoAreia.value < 0){
             erros.push([consumoAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${consumoAreia.value}.`])
         } else {
-            ocultaErro(consumoAreia);
+            ocultarErro(consumoAreia);
         }
     }
 }
@@ -258,28 +295,28 @@ function calcularTraco(){
 
         tracoBrita.value = (consumoBrita.value / consumoCimento.value).toFixed(2);
 
-        tracoAC.value = (consumoAgua.value / consumoCimento.value).toFixed(2);
+        tracaoAgua.value = (consumoAgua.value / consumoCimento.value).toFixed(2);
 
         if (tracoAreia.value < 0){
             erros.push([tracoAreia, `Esse valor não pode ser negativo. O cálculo anterior era: ${tracoAreia.value}.`])
         } else {
-            ocultaErro(tracoAreia);
+            ocultarErro(tracoAreia);
         }
     }
 }
 
-function calcularCapacidadeBetoneira(){
-    if (betoneira.value && tracoCimento.value && cimentoEspecifica.value && tracoAreia.value && areiaEspecifica.value && tracoBrita.value && britaEspecifica.value && tracoAC.value){
-        betoneiraValue = parseFloat(betoneira.value);
+function calcularConsumoBetoneira(){
+    if (capacidadeBetoneira.value && tracoCimento.value && cimentoEspecifica.value && tracoAreia.value && areiaEspecifica.value && tracoBrita.value && britaEspecifica.value && tracaoAgua.value){
+        capacidadeBetoneiraValue = parseFloat(capacidadeBetoneira.value);
         tracoCimentoValue = parseFloat(tracoCimento.value);
         cimentoEspecificaValue = parseFloat(cimentoEspecifica.value);
         tracoAreiaValue = parseFloat(tracoAreia.value);
         areiaEspecificaValue = parseFloat(areiaEspecifica.value);
         tracoBritaValue = parseFloat(tracoBrita.value);
         britaEspecificaValue = parseFloat(britaEspecifica.value);
-        tracoACValue = parseFloat(tracoAC.value);
+        tracoACValue = parseFloat(tracaoAgua.value);
 
-        consumoBetoneiraCimento.value = (betoneiraValue / ((tracoCimentoValue / cimentoEspecificaValue) + (tracoAreiaValue / areiaEspecificaValue) + (tracoBritaValue / britaEspecificaValue) +  tracoACValue)).toFixed(2)
+        consumoBetoneiraCimento.value = (capacidadeBetoneiraValue / ((tracoCimentoValue / cimentoEspecificaValue) + (tracoAreiaValue / areiaEspecificaValue) + (tracoBritaValue / britaEspecificaValue) +  tracoACValue)).toFixed(2)
 
         consumoBetoneiraAreia.value = (consumoBetoneiraCimento.value * tracoAreiaValue).toFixed(2);
         
@@ -289,10 +326,20 @@ function calcularCapacidadeBetoneira(){
     }
 }
 
-function verificaErros(){
+function exibirAlerta(obj, msg){
+    obj.nextElementSibling.style.display = "block"
+    obj.nextElementSibling.textContent = msg;
+}
+
+function ocultarAlerta(obj){
+    if (obj.nextElementSibling)
+        obj.nextElementSibling.style.display = "none"
+}
+
+function verificarErros(){
     if (erros.length > 0){
         for (var i=0, l=erros.length; i<l; i++){
-            exibeErros(erros[i]);
+            exibirErros(erros[i]);
         }
         
         for (var i=0, l=inputsResultados.length; i<l; i++) {
@@ -301,7 +348,7 @@ function verificaErros(){
     }
 }
 
-function exibeErros(e){
+function exibirErros(e){
     e[0].style.borderColor = "#e02041";
     e[0].style.color = "#e02041";
 
@@ -309,14 +356,14 @@ function exibeErros(e){
     e[0].nextElementSibling.textContent = e[1];
 }
 
-function ocultaErro(obj){
+function ocultarErro(obj){
     obj.style.borderColor = "#dcdce6";
     obj.style.color = "#333";
         
     obj.nextElementSibling.style.display = "none"
 }
 
-function defineTituloDesvioPadrao(){
+function definirTituloDesvioPadrao(){
     desvioPadrao.title = titulosDesvioPadrao[desvioPadrao.selectedIndex];
 }
 

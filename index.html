@@ -12,16 +12,16 @@
         <div>
             <strong>Agressividade do ambiente</strong>
             <select name="agressividade" id="agressividade">
-                <option value="3">Industrial (Forte)</option>
-                <option value="2">Industrial A (Moderada)</option>
-                <option value="2">Industrial B (Moderada)</option>
-                <option value="4">Industrial C (Muito forte)</option>
-                <option value="4">Respingos de maré (Muito forte)</option>
-                <option value="1">Rural (Fraca)</option>
-                <option value="1">Submerso (Fraca)</option>
-                <option value="2">Urbana (Moderada)</option>
-                <option value="1">Urbana A (Fraca)</option>
-                <option value="1">Urbana B (Fraca)</option>
+                <option value="1">1 - Fraca (Rural)</option>
+                <option value="1">1 - Fraca (Submerso)</option>
+                <option value="1">1 - Fraca (Urbana A)</option>
+                <option value="1">1 - Fraca (Urbana B)</option>
+                <option value="2">2 - Moderada (Industrial A)</option>
+                <option value="2">2 - Moderada (Industrial B)</option>
+                <option value="2">2 - Moderada (Urbana)</option>
+                <option value="3">3 - Forte (Industrial )</option>
+                <option value="4">4 - Muito forte (Industrial C)</option>
+                <option value="4">4 - Muito forte (Respingos de maré)</option>
             </select>
         </div>
         
@@ -34,9 +34,24 @@
         </div>
         
         <div>
-            <strong>Fck</strong>
+            <strong>fck</strong>
             <input type="number" name="fck" id="fck" maxlength="50">
             <span class="mensagem-erro" id="erro-fck"></span>
+        </div>
+        
+        <div>
+            <strong>Curva de Abrams adotada</strong>
+            <select name="curva" id="curva">
+                <option value="A">y = -52,65ln(x) + 5,7427</option>
+                <option value="B">y = -49,64ln(x) + 5,3893</option>
+                <option value="C">y = -46,41ln(x) + 5,0623</option>
+                <option value="D">y = -43,28ln(x) + 4,7142</option>
+                <option value="E">y = -40,13ln(x) + 4,3422</option>
+                <option value="F">y = -36,83ln(x) + 4,0432</option>
+                <option value="G">y = -33,83ln(x) + 3,634</option>
+                <option value="H">y = -30,63ln(x) + 3,2929</option>
+            </select>
+            <span class="mensagem-alerta"></span>
         </div>
         
         <div>
@@ -52,7 +67,7 @@
         </div>
         
         <div>
-            <strong>Slump/batimento</strong>
+            <strong>Slump/Abatimento</strong>
             <select name="slump" id="slump">
                 <option value="A">61 a 80mm</option>
                 <option value="B">81 a 100mm</option>
@@ -65,7 +80,7 @@
         </div>
 
         <div>
-            <strong>Desvio Padrão</strong>
+            <strong>Desvio Padrão (Sd)</strong>
             <select name="desvio-padrao" id="desvio-padrao">
                 <option value="4">4</option>
                 <option value="5.5">5,5</option>
@@ -74,32 +89,22 @@
         </div>
                 
         <div>
-            <strong>Cimento - Massa Específica (Kg/dm³)</strong>
+            <strong>Cimento - Massa Específica (kg/dm³)</strong>
             <input type="number" name="cimento-espec" id="cimento-espec" >
         </div>
         
         <div>
-            <strong>Areia - Massa Específica (Kg/dm³)</strong>
+            <strong>Areia - Massa Específica (kg/dm³)</strong>
             <input type="number" name="areia-espec" id="areia-espec" >
         </div>
         
         <div>
-            <strong>Brita - Massa Específica (Kg/dm³)</strong>
+            <strong>Brita - Massa Específica (kg/dm³)</strong>
             <input type="number" name="brita-espec" id="brita-espec" >
         </div>
         
         <div>
-            <strong>Cimento - Massa Unitária (Kg/dm³)</strong>
-            <input type="number" name="cimento-unitaria" id="cimento-unitaria" >
-        </div>
-        
-        <div>
-            <strong>Areia - Massa Unitária (Kg/dm³)</strong>
-            <input type="number" name="areia-unitaria" id="areia-unitaria" >
-        </div>
-        
-        <div>
-            <strong>Brita - Massa Unitária (Kg/dm³)</strong>
+            <strong>Brita - Massa Unitária (kg/dm³)</strong>
             <input type="number" name="brita-unitaria" id="brita-unitaria" >
         </div>
         
@@ -120,20 +125,20 @@
         </div>
         
         <div>
-            <strong>Capacidade da betoneira</strong>
-            <input type="number" name="betoneira" id="betoneira" >
+            <strong>Capacidade da betoneira (em litros)</strong>
+            <input type="number" name="capacidade-betoneira" id="capacidade-betoneira" >
         </div>
     </div>
     
     <div class="container" id="resultados">
         <div>
-            <strong>Fcj</strong>
+            <strong>fcj</strong>
             <input type="number" name="fcj" id="fcj" readonly>
             <span class="mensagem-erro" id="erro-fcj"></span>
         </div>
         
         <div>
-            <strong>Relação água cimento</strong>
+            <strong>Relação água/cimento (a/c)</strong>
             <input type="number" name="agua-cimento" id="agua-cimento" readonly>
             <span class="mensagem-erro" id="erro-ac"></span>
         </div>
@@ -161,7 +166,7 @@
         </div>
         
         <div>
-            <strong>Consumo de areia (kg)</strong>
+            <strong>Consumo de areia (kg/m³)</strong>
             <input type="number" name="consumo-areia" id="consumo-areia" readonly>
             <span class="mensagem-erro"></span>
         </div>
@@ -183,8 +188,8 @@
         </div>
         
         <div>
-            <strong>Traço - Água/Cimento</strong>
-            <input type="number" name="traco-ac" id="traco-ac" readonly>
+            <strong>Traço - Água</strong>
+            <input type="number" name="traco-agua" id="traco-agua" readonly>
         </div>
         
         <div>
