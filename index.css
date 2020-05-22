@@ -45,15 +45,32 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.container{
+.container, .three-container, .two-container{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 16px;
-    list-style: none;
     margin-bottom: 16px;
 }
 
-.container div{
+.container{
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.three-container{
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.two-container{
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.mini-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
+}
+
+.container div, .two-container div, .three-container div, .chart{
     background: #FFF;
     padding: 16px;
     border-radius: 8px;
@@ -62,12 +79,32 @@ input[type=number] {
     transition: box-shadow 0.4s, transform 0.2s ease-out;
 }
 
-.container div:hover{
+#traco{
+    background: #1eb16781;
+}
+
+#traco strong{
+    color: #FFF;
+}
+
+#betoneira{
+    background: #178fda81;
+}
+
+#betoneira strong{
+    color: #FFF;
+}
+
+.chart{
+    transition: box-shadow 0.4s, transform 0.2s ease-out;
+}
+
+.container div:hover, .three-container div:hover, .two-container div:hover, .chart:hover{
     box-shadow: 0 0 10px rgba(0, 0 , 0, 0.3);
     transform: scale(1.02);
 }
 
-.container div strong{
+.container div strong, .two-container div strong, .three-container div strong{
     display: block;
     margin-bottom: 16px;
     color: #41414d;
