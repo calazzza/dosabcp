@@ -6,8 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="index.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script src="Chart.min.js"></script>
 </head>
 <body>
     <div class="mini-container">
@@ -15,6 +14,7 @@
             <div>
                 <strong>Agressividade do ambiente</strong>
                 <select name="agressividade" id="agressividade">
+                    <option value=""></option>
                     <option value="1">1 - Fraca (Rural)</option>
                     <option value="1">1 - Fraca (Submerso)</option>
                     <option value="1">1 - Fraca (Urbana A)</option>
@@ -31,6 +31,7 @@
             <div>
                 <strong>Tipo de estrutura</strong>
                 <select name="estrutura" id="estrutura">
+                    <option value=""></option>
                     <option value="armado">Concreto armado</option>
                     <option value="protendido">Concreto protendido</option>
                 </select>
@@ -45,6 +46,7 @@
             <div>
                 <strong>Curva de Abrams adotada</strong>
                 <select name="curva" id="curva">
+                    <option value=""></option>
                     <option value="A">y = -52,65ln(x) + 5,7427</option>
                     <option value="B">y = -49,64ln(x) + 5,3893</option>
                     <option value="C">y = -46,41ln(x) + 5,0623</option>
@@ -58,8 +60,9 @@
             </div>
             
             <div>
-                <strong>Diâmetro da brita</strong>
+                <strong>Diâmetro máximo da brita</strong>
                 <select name="diametro-brita" id="diametro-brita">
+                    <option value=""></option>
                     <option value="9.5">9,5mm</option>
                     <option value="12.5">12,5mm</option>
                     <option value="19">19mm</option>
@@ -72,6 +75,7 @@
             <div>
                 <strong>Slump/Abatimento</strong>
                 <select name="slump" id="slump">
+                    <option value=""></option>
                     <option value="A">61 a 80mm</option>
                     <option value="B">81 a 100mm</option>
                     <option value="C">101 a 120mm</option>
@@ -84,7 +88,7 @@
         </div>
         
         <div>
-            <canvas class="chart" id="canvas" width="460" height="250"></canvas>
+            <canvas class="chart" id="canvas" width="460" height="247"></canvas>
         </div>
     </div>
     
@@ -92,6 +96,7 @@
         <div>
             <strong>Desvio Padrão (Sd)</strong>
             <select name="desvio-padrao" id="desvio-padrao">
+                <option value=""></option>
                 <option value="4">4</option>
                 <option value="5.5">5,5</option>
                 <option value="7">7</option>
@@ -101,6 +106,7 @@
         <div>
             <strong>Módulo de finura da areia</strong>
             <select name="finura-areia" id="finura-areia">
+                <option value=""></option>
                 <option value="1.0">1,0</option>
                 <option value="1.2">1,2</option>
                 <option value="1.4">1,4</option>

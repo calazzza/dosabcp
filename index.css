@@ -8,7 +8,7 @@
 }
 
 body{
-    font: 400 14px Roboto, sans-serif;
+    font: 400 13px Roboto, sans-serif;
     background: #f0f0f5;
     -webkit-font-smoothing: antialiased;
 
@@ -16,33 +16,6 @@ body{
     max-width: 1180px;
     padding: 0 30px;
     margin: 32px auto;
-}
-
-input, select{
-    font: 400 14px Roboto, sans-serif;
-    width: 100%;
-    height: 25px;
-    color: #333;
-    border: 1px solid #dcdce6;
-    border-radius: 8px;
-    padding: 0 12px;
-    transition: border 0.4s;
-}
-
-input:hover, input:focus, select:hover, select:focus{
-    border: 1.4px solid #9c9ca1;
-}
-
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
 }
 
 .container, .three-container, .two-container{
@@ -79,26 +52,6 @@ input[type=number] {
     transition: box-shadow 0.4s, transform 0.2s ease-out;
 }
 
-#traco{
-    background: #1eb16781;
-}
-
-#traco strong{
-    color: #FFF;
-}
-
-#betoneira{
-    background: #178fda81;
-}
-
-#betoneira strong{
-    color: #FFF;
-}
-
-.chart{
-    transition: box-shadow 0.4s, transform 0.2s ease-out;
-}
-
 .container div:hover, .three-container div:hover, .two-container div:hover, .chart:hover{
     box-shadow: 0 0 10px rgba(0, 0 , 0, 0.3);
     transform: scale(1.02);
@@ -110,18 +63,58 @@ input[type=number] {
     color: #41414d;
 }
 
+#traco{
+    background: #1eb16781;
+}
+
+#betoneira{
+    background: #178fda81;
+}
+
+#traco strong, #betoneira strong{
+    color: #FFF;
+}
+
+input, select{
+    font: 400 14px Roboto, sans-serif;
+    width: 100%;
+    height: 25px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 0 12px;
+    transition: border 0.4s;
+}
+
+input:hover, input:focus, select:hover, select:focus, :not(#resultados input:focus, #resultados input:hover){
+    border: 1px solid #9c9ca1;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 input:read-only{
     background: #ebebeb;
 }
 
-.mensagem-erro{
+.mensagem-erro, .mensagem-alerta{
     font-size: 10px;
-    color: #e02041;
     display: none;
 }
 
+.mensagem-erro{
+    color: #e02041;
+}
+
 .mensagem-alerta{
-    font-size: 10px;
     color: #b9ae08;
-    display: none;
 }
