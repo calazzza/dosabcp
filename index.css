@@ -15,7 +15,20 @@ body{
     width: 100%;
     max-width: 1180px;
     padding: 0 30px;
-    margin: 32px auto;
+    margin: 25px auto;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    margin: 0px auto 25px;
+    font: 700 25px Roboto, sans-serif;
+    color: #41414d;
+}
+
+header span{
+    font: 500 18px Roboto, sans-serif;
+    margin-left: auto;
 }
 
 .container, .three-container, .two-container{
