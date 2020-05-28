@@ -195,7 +195,7 @@ function calcularFcj(){
                 : ocultarAlerta(curva)
                 break;
             default:
-                erros.push([fcj, `Rever valores de Fcj. O valor máximo é 50. O valor atual é: ${fcj.value}.`]);
+                erros.push([fcj, `Rever valores de fck e desvio padrão. O valor máximo de fcj é 50, o valor atual é: ${fcj.value}.`]);
         }
     } else {
         fcj.value = "";
