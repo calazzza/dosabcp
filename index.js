@@ -34,6 +34,10 @@ const inputs = document.querySelectorAll("input");
 const inputsResultados = document.querySelectorAll(".resultados input");
 const selects = document.querySelectorAll("select");
 
+const contatoBtn = document.querySelector("#contato-btn")
+const modal = document.querySelector('#modal');
+const divModal = document.querySelector("#modal > div")
+
 let erros;
 
 let a;
@@ -513,3 +517,20 @@ window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
     window.myLine = new Chart(ctx, myChart);
 };
+
+contatoBtn.onclick = () => {
+    modal.classList.add('top', 'in', 'modal-open');
+    divModal.classList.add('in');
+}
+
+modal.onclick = function(e) {
+    if (e.target !== this){
+        e.preventDefault
+    } else{
+        divModal.classList.remove('in');
+        modal.classList.remove('in', 'modal-open')
+        setTimeout(function(){ 
+            modal.classList.remove("top")
+        }, 300);
+    } 
+}

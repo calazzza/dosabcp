@@ -26,9 +26,25 @@ header {
     color: #41414d;
 }
 
-header span{
+header div{
     font: 500 18px Roboto, sans-serif;
     margin-left: auto;
+}
+
+header button{
+    font: 500 15px Roboto, sans-serif;
+    color: #fff;
+    background: #9c9ca1;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    margin-left: 8px;
+    transition: opacity 0.2s ease-out;
+}
+
+header button:hover{
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .container, .three-container, .two-container{
@@ -36,10 +52,6 @@ header span{
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 16px;
     margin-bottom: 16px;
-}
-
-.container{
-    grid-template-columns: repeat(4, 1fr);
 }
 
 .three-container{
@@ -56,7 +68,7 @@ header span{
     grid-gap: 16px;
 }
 
-.container div, .two-container div, .three-container div, .chart{
+.container div, .two-container div, .three-container div, .chart, .modal div{
     background: #FFF;
     padding: 16px;
     border-radius: 8px;
@@ -130,4 +142,62 @@ input:read-only{
 
 .mensagem-alerta{
     color: #b9ae08;
+}
+
+.modal{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+    justify-items: center;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: #41414d5e;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.modal-open{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.top{
+    z-index: 1000;
+}
+
+.fade{
+    opacity: 0;
+    -webkit-transition: opacity .3s ease-out;
+    -o-transition: opacity .3s ease-out;
+    transition: opacity .3s ease-out;
+}
+
+.fade.in{
+    opacity: 1;
+}
+
+.modal div{
+    width: 25%;
+    box-shadow: 0 0 8px rgba(0, 0 , 0, 0.1);
+}
+
+.modal h1{
+    font: 700 25px Roboto, sans-serif;
+    color: #41414d;
+    margin-bottom: 16px;
+}
+
+.modal p{
+    color: #41414d;
+    margin-bottom: 12px;
+}
+
+.modal a{
+    color: #41414d;
 }
