@@ -111,7 +111,7 @@ input, select{
     transition: border 0.4s;
 }
 
-input:hover, input:focus, select:hover, select:focus, :not(#resultados input:focus, #resultados input:hover){
+.main input:hover, .main input:focus, .main select:hover, .main select:focus{
     border: 1px solid #9c9ca1;
 }
 
